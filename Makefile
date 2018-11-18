@@ -1,5 +1,7 @@
 NAME = ShaderPixel
-SRC = *.cpp
+SRC = srcs/Camera.cpp srcs/Cube.cpp srcs/RenderObject.cpp \
+srcs/Shader.cpp srcs/ShaderFrame.cpp srcs/ShaderPanel.cpp srcs/Window.cpp \
+srcs/input.cpp srcs/main.cpp srcs/panel.cpp srcs/PostProcess.cpp
 OBJ = $(SRC:.cpp=.o)
 FRAMEWORKS = -framework OpenGl -w
 BREW_INC = -I ~/.brew/include
