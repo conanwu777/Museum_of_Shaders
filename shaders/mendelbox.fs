@@ -21,13 +21,13 @@ void sphereFold(inout vec3 z, inout float dz)
 	{ 
 		float temp = 2.0;
 		z *= temp;
-		dz *= temp;
+		dz*= temp;
 	}
 	else if (r2 < 1.0)
 	{ 
 		float temp = 1.0 / r2;
 		z *= temp;
-		dz *= temp;
+		dz*= temp;
 	}
 }
 
@@ -46,10 +46,10 @@ float dist(vec3 z)
 	z *= 2 / scale;
 	vec3 offset = z;
 	float dr = 1.0;
-	for (int n = 0; n < 12; n++)
+	for (int n = 0; n < 10; n++)
 	{
-		boxFold(z, dr);
-		sphereFold(z, dr);
+		boxFold(z,dr);
+		sphereFold(z,dr);
 		z = scale * z + offset;
 		dr = dr * abs(scale) + 1.0;
 	}
@@ -57,7 +57,7 @@ float dist(vec3 z)
 	return r / abs(dr);
 }
 
-float shadow(in vec3 ro, in vec3 rd, in float hn)
+float shadow( in vec3 ro, in vec3 rd, in float hn)
 {
 	float res = 1.0;
 	float t = 0.0005;

@@ -65,59 +65,23 @@ mat3  rotationMatrix3(vec3 v, float angle)
 	c + (1.0 - c) * v.z * v.z);
 }
 
-//float dist (vec3 p)
-//{
-//	p = p.zxy;
-//	//p.x *= .75;
-//	vec3 anim = vec3(sin(1.), sin(iTime * .4), cos(iTime * .06));
-//	p += sin(p * 3. + iTime * 2.) * .04;
-//	mat3 rot = rotationMatrix3(normalize(vec3(0.5,-0.05,-0.5) + anim), 2 * PI / 3 + sin(iTime * 0.3) * 0.5);
-//	vec3 pp = p;
-//	float l;
-//	for (int i = 0; i < 32; i++)
-//	{
-//		p.xy = abs(p.xy);
-//		p = p * Scale + Julia;
-//		p *= rot;
-//		l = length(p);
-//	}
-//	return l * pow(Scale, -32);
-//}
-
-const float scale = 1.3;
-const float bailout = 10.0;
-#define CX 1.0
-#define CY 1.0
-#define CZ 1.0
-
-
-float dist(vec3 p){
-	int i;
-	float r = dot(p, p);
-	float tau = 0.436;
-	mat2 rot = mat2(cos(tau), -sin(tau), sin(tau), cos(tau));
-	for (i = 0; i < 32 && r < bailout; i++)
-   {
-		p.xz *= rot;
-		float t;
-
-		if (p.x < p.y) {t = p.y; p.y = p.x; p.x = t;}
-		if (p.x < p.z) {t = p.z; p.z = p.x; p.x = t;}
-		if (p.y < p.z) {t = p.z; p.z = p.y; p.y = t;}
-
-		p.z -= 0.5 * CZ * (scale - 1.0) / scale;
-		p.z = -abs(-p.z);
-		p.z += 0.5 * CZ * (scale - 1.0) / scale;
-
-		// rotate2(p);
-
-		p.x = scale * p.x - CX * (scale - 1);
-		p.y = scale * p.y - CY * (scale - 1);
-		p.z *= scale;
-
-		r = dot(p, p);
-   }
-   return length(p) * pow(scale, -i);
+float dist (vec3 p)
+{
+	p = p.zxy;
+	p.x *= .75;
+	vec3 anim = vec3(sin(1.), sin(iTime * .4), cos(iTime * .06));
+	p += sin(p * 3. + iTime * 2.) * .04;
+	mat3 rot = rotationMatrix3(normalize(vec3(0.5,-0.05,-0.5) + anim), 2 * PI / 3 + sin(iTime * 0.3) * 0.5);
+	vec3 pp = p;
+	float l;
+	for (int i = 0; i < 32; i++)
+	{
+		p.xy = abs(p.xy);
+		p = p * Scale + Julia;
+		p *= rot;
+		l = length(p);
+	}
+	return l * pow(Scale, -32);
 }
 
 void main()
@@ -147,7 +111,7 @@ void main()
 		rd.x *= -1.0;
 	}
 
-	float st, d = 1.0, col, totdist = st = 0.0;
+	float st,d = 1.0, col, totdist = st = 0.0;
 	vec3 p;
 	for (int i = 0; i < 70; i++)
 	{
