@@ -67,3 +67,10 @@ Run with:
 `-1` Vintage mode on/off
 
 `Space` go in/out of inside mode when close to shaders
+
+`arrow keys` adjust the x, y coordinate of main light
+
+`+, -` adjust the z coordinate of main light
+
+
+
