@@ -5,6 +5,7 @@ srcs/input.cpp srcs/main.cpp srcs/panel.cpp srcs/PostProcess.cpp
 OBJ = $(SRC:.cpp=.o)
 FRAMEWORKS = -framework OpenGl -w
 BREW_INC = -I ~/.brew/include
+STB_INC = -I ./stb
 GLFW_LINK = -L ~/.brew/lib -lglfw
 
 RED = "\033[1;38;2;225;20;20m"
@@ -16,11 +17,31 @@ BLUE = "\033[1;38;2;50;150;250m"
 PURPLE = "\033[1;38;2;150;75;255m"
 WHITE = "\033[1;38;2;255;250;232m"
 
-all: $(NAME)
+all: install $(NAME)
+
+install:
+ifneq ("$(shell test -e $(HOME)/.brew && echo ex)" , "ex")
+	@echo "BREW INSTALLING ..."
+	@curl -fsSL https://rawgit.com/kube/42homebrew/master/install.sh | zsh
+	@echo $(YELLO)INSTALLING glfw: please be patient
+endif
+	@echo $(WHITE)Checking for graphics library ...
+ifneq ("$(wildcard ~/.brew/include/GLFW/glfw3.h)","")
+	@echo $(GREEN)"Already installed!"
+else
+	@brew install glfw
+endif
+	@echo $(WHITE)Checking for stb_image ...
+ifneq ("$(wildcard ./stb/stb_image.h)","")
+	@echo $(GREEN)"Already installed!"
+else
+	@echo $(YELLO)Downloading stb_image ...
+	git clone https://github.com/nothings/stb.git stb
+endif
 
 $(NAME): $(SRC)
 	@echo $(YELLO)Making $(NAME)
-	@g++ -std=c++11 $(SRC) -o $(NAME) $(FRAMEWORKS) $(BREW_INC) $(GLFW_LINK)
+	@g++ -std=c++11 $(SRC) -o $(NAME) $(FRAMEWORKS) $(BREW_INC) $(STB_INC) $(GLFW_LINK)
 	@echo $(GREEN)Done!
 
 clean:
