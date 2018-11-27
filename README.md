@@ -2,7 +2,7 @@
 
 A showcase of OpenGL shaders in both 3D and 2D, with ray-marching and other techniques
 
-[![museum](1.png)](https://www.youtube.com/watch?v=OtV_jjPAznA&t=59s "Shader Video") ![film_mode](./film.png)
+[![museum](1.png)](https://www.youtube.com/watch?v=OtV_jjPAznA "Shader Video") ![film_mode](./film.png)
 
 This project is done in collobration with my programming partner Liam Deheaudt, I am in charge of shader-making, lighting and coming up with mechenisms of the diaplay (done using a bill-board like structure when player is far from shaders and a full-screen transparent film when in the 'inside mode'.
 
